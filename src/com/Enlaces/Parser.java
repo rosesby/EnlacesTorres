@@ -1,20 +1,26 @@
 package com.Enlaces;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLOutput;
 
 public class Parser {
 
-    String dataPath = "src/data.txt";
     BufferedReader in;
 
-    public Parser() throws IOException {
-       in = new BufferedReader(new FileReader(dataPath));
+    public BufferedReader getIn() {
+        return in;
     }
 
-    String line = in.readLine();
+    public Parser(String dataPath) throws IOException {
+        FileReader fileReader = new FileReader(dataPath);
+        in = new BufferedReader(fileReader);
+    }
+
+
+    public String readLine() throws IOException {
+        return in.readLine();
+    }
+
 
 }
