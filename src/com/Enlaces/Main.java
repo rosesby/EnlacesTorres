@@ -10,78 +10,65 @@ import java.util.regex.Pattern;
 
 public class Main {
     private static Map map;
+    private static int lineCounter;
 
     public static void main(String[] args) throws IOException {
         map = new Map();
+        lineCounter = 1;
         Parser parser = new Parser("src/Data/input");
         BufferedReader in = parser.getIn();
 
-        String patternOpenConnection = "([A-z]+[0-9]*[\\s]*(<-|->)[\\s]*[A-z]+[0-9]*[\\s]*)[.]";
-        String patternTravel = "([A-z]+[0-9]*[\\s]*(<=|=>)[\\s]*[A-z]+[0-9]*[\\s]*)[?]";
-        String patternCloseConnection = "[A-z]+[0-9]*[\\s]*(-)[\\s]*[A-z]+[0-9]*[\\s]*[.]";
+        Pattern patternOpenConnection = Pattern.compile("(([A-z]+[0-9]*)[\\s]*(<-|->)[\\s]*([A-z]+[0-9]*)[\\s]*[.])(.*)");
+        Pattern patternTravel = Pattern.compile("(([A-z]+[0-9]*)[\\s]*(<=|=>)[\\s]*([A-z]+[0-9]*)[\\s]*[?])(.*)");
+        Pattern patternCloseConnection = Pattern.compile("[A-z]+[0-9]*[\\s]*(-)[\\s]*[A-z]+[0-9]*[\\s]*[.]");
 
-        Pattern connectionPattern = Pattern.compile(patternOpenConnection);
+        Pattern[] patterns = new Pattern[]{patternOpenConnection, patternTravel, patternCloseConnection};
 
         System.out.println();
         System.out.println(Consola.Color.YELLOW_UNDERLINED + "CONNECTIONS :" + Consola.Color.RESET);
-        checkRegex(in, connectionPattern);
-
-        Parser parser2 = new Parser("src/Data/input");
-        in = parser2.getIn();
-        Pattern travelPattern = Pattern.compile(patternTravel);
 
         System.out.println();
         System.out.println(Consola.Color.YELLOW_UNDERLINED + "TRAVELS :" + Consola.Color.RESET);
-        checkRegex(in, travelPattern);
 
-
-//
-//        Map.Tower t1 = map.createTower("Culiacan");
-//        Map.Tower t2 = map.createTower("Mazatlan");
-//        Map.Tower t3 = map.createTower("Guadalajara");
-//        Map.Tower t4 = map.createTower("Monterrey");
-//
-//        t1.addLink(t2);
-//        t1.addLink(t3);
-//        t1.addLink(t4);
-
-//        System.out.println(t1);
+        checkRegex(in, patterns);
     }
 
-    static private void checkRegex(BufferedReader input, Pattern pattern) throws IOException {
+    static private void checkRegex(BufferedReader input, Pattern[] patterns) throws IOException {
         String data;
         while ((data = input.readLine()) != null) {
+            for( Pattern pattern : patterns) {
+                Matcher m = pattern.matcher(data);
+                if (m.find()) {
+/*                    for (int i = 0; i <= m.groupCount(); i++) {
+                        System.out.println(i + " : " +m.group(i));
+                    }*/
 
-            Matcher m = pattern.matcher(data);
-            if (m.find()) {
-                System.out.println();
-                System.out.println(Consola.Color.RED + "Match in line x : " + Consola.Color.RESET + data + Consola.Color.RESET);
-                String expresion = m.group(1);
-                System.out.println(Consola.Color.BLUE + "Expresion: " + Consola.Color.RESET + expresion);
-                System.out.println(Consola.Color.CYAN + "Garbage: " +Consola.Color.RESET);
-                tokenize(expresion);
+                    String line = m.group(0);
+                    String expresion = m.group(1);
+                    String city1 = m.group(2);
+                    String operator = m.group(3);
+                    String city2 = m.group(4);
+                    String garbage = m.group(5);
+
+                    System.out.println();
+                    System.out.println(Consola.Color.RED + "Match in line " + lineCounter + " : " + Consola.Color.RESET + line + Consola.Color.RESET);
+                    System.out.println(Consola.Color.BLUE + "Expression: " + Consola.Color.RESET + expresion);
+                    System.out.println(Consola.Color.CYAN + "Garbage: " + Consola.Color.RESET + garbage);
+
+                    System.out.print(Consola.Color.PURPLE + "City1 : " + Consola.Color.RESET + city1 + " : ");
+                    checkCity(city1);
+
+                    System.out.println(Consola.Color.PURPLE + "Operator: " + Consola.Color.RESET + operator);
+
+                    System.out.print(Consola.Color.PURPLE + "City2 : " + Consola.Color.RESET + city2 + " : ");
+                    checkCity(city2);
+
+                    System.out.print(Consola.Color.PURPLE + "Result : " + Consola.Color.GREEN);
+                    map.createRelation(city1,city2);
+                    System.out.print(Consola.Color.RESET);
+                }
             }
-        }
-    }
-
-    static private void tokenize(String string) {
-        String city1;
-        String operator;
-        String city2;
-        StringTokenizer st = new StringTokenizer(string);
-        if (st.hasMoreTokens()) {
-            city1 = st.nextToken();
-            System.out.print(Consola.Color.PURPLE + "City1 : " + Consola.Color.RESET + city1 + " : ");
-            checkCity(city1);
-        }
-        if (st.hasMoreTokens()) {
-            operator = st.nextToken();
-            System.out.println(Consola.Color.PURPLE + "Operator: " + Consola.Color.RESET + operator);
-        }
-        if (st.hasMoreTokens()) {
-            city2 = st.nextToken();
-            System.out.print(Consola.Color.PURPLE + "City2 : " + Consola.Color.RESET + city2 + " : ");
-            checkCity(city2);
+            lineCounter++;
         }
 
     }
