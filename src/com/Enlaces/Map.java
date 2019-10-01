@@ -1,5 +1,7 @@
 package com.Enlaces;
 
+import jdk.jshell.spi.ExecutionControl;
+
 import java.util.ArrayList;
 
 public class Map {
@@ -31,6 +33,41 @@ public class Map {
                 .filter(city -> city.getName().equals(strCityName))
                 .findFirst()
                 .get();
+    }
+
+    public void createCityIfDoesNotExists(String strCity){
+        boolean check = checkIfTowerExistsByName(strCity);
+        if(check){
+            System.out.println("Already Exists");
+        }
+        else{
+            createCity(strCity);
+            System.out.println("City was created");
+        }
+    }
+
+    public boolean checkIfCanTravelFromTo(String strCity1, String strCity2){
+        City city1 = getExistingCityByName(strCity1);
+        City city2 = getExistingCityByName(strCity2);
+
+        for (City city : city1.linkedCities){
+            searchWayToCity(city1,city2);
+        }
+        return false;
+    }
+
+    public boolean searchWayToCity(City city1, City city2){
+        boolean res = city1.linkedCities.stream().anyMatch(city -> city.linkedCities.contains(city2));
+        return res;
+    }
+
+    public void closeAllConnectionsBetween(String strCity1, String strCity2){
+        City city1 = getExistingCityByName(strCity1);
+        City city2 = getExistingCityByName(strCity2);
+
+        //TODO apply exception istead of if
+        if(city1.linkedCities.contains(city2)) city1.linkedCities.remove(city2);
+        if(city2.linkedCities.contains(city1)) city2.linkedCities.remove(city1);
     }
 
     public class City {
