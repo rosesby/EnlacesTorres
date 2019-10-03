@@ -1,4 +1,6 @@
 Culiacan1 -> Hermosillo2.
+Culiacan1 -> Hermosillo2. // Linea anterior repetida
+Culiacan1 -> Guadalajara3.
 Hermosillo2 -> Monterrey5.
 Culiacan1 => Monterrey5? // esta es una pregunta
 Guadalajara3 <- Hermosillo2.

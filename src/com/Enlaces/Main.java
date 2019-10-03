@@ -2,7 +2,9 @@ package com.Enlaces;
 
 import Util.Consola;
 
+import javax.xml.stream.util.EventReaderDelegate;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,9 +16,13 @@ public class Main {
     public static void main(String[] args) throws IOException {
         map = new Map();
         lineCounter = 1;
-        Parser parser = new Parser("src/Data/input");
-        BufferedReader in = parser.getIn();
-        Pattern pattern = Pattern.compile("(([A-z]+[0-9]*)[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z]+[0-9]*)[\\s]*[.])(.*)");
+
+        Runnable method;
+
+        FileReader fileReader = new FileReader("src/Data/input");
+        BufferedReader in = new BufferedReader(fileReader);
+
+        Pattern pattern = Pattern.compile("(([A-z]+[0-9]*)[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z]+[0-9]*)[\\s]*[.?])(.*)");
 
         String data;
         while ((data = in.readLine()) != null) {
@@ -32,7 +38,7 @@ public class Main {
                 System.out.println();
                 System.out.println(Consola.Color.RED + "Match in line " + lineCounter + " : " + Consola.Color.RESET + line + Consola.Color.RESET);
                 System.out.println(Consola.Color.BLUE + "Expression: " + Consola.Color.RESET + expresion);
-                System.out.println(Consola.Color.CYAN + "Garbage: " + Consola.Color.RESET + garbage);
+                if(!garbage.isBlank()) System.out.println(Consola.Color.CYAN + "Garbage: " + Consola.Color.RESET + garbage);
 
                 System.out.print(Consola.Color.PURPLE + "City1 : " + Consola.Color.RESET + city1 + " : ");
                 System.out.print(Consola.Color.GREEN);
@@ -48,7 +54,7 @@ public class Main {
 
                 System.out.print(Consola.Color.PURPLE + "Result : " + Consola.Color.RESET);
 
-                System.out.print(Consola.Color.GREEN);
+                //todo use delegate to call search function
                 switch (operator) {
                     case "->":
                         map.createRelation(city1, city2);
@@ -56,19 +62,18 @@ public class Main {
                     case "<-":
                         map.createRelation(city2, city1);
                         break;
-                    case "<=":
-                        System.out.println("GoToFrom");
-                        map.checkIfCanTravelFromTo(city1, city2);
-                        break;
                     case "=>":
-                        System.out.println("GoFromTo");
-                        map.checkIfCanTravelFromTo(city1, city2);
+                        System.out.println("Puede ir de " + city1 + " a " +  city2 + " : " + map.searchWayToCityBFS(city1, city2));
+                        System.out.println("Puede ir de " + city1 + " a " +  city2 + " : " + map.searchWayToCityDFS(city1, city2));
+                        break;
+                    case "<=":
+                        System.out.println("Puede ir de " + city2 + " a " +  city1 + " : " + map.searchWayToCityBFS(city2, city1));
+                        System.out.println("Puede ir de " + city2 + " a " +  city1 + " : " + map.searchWayToCityDFS(city2, city1));
                         break;
                     case "-":
                         map.closeAllConnectionsBetween(city1, city2);
                         break;
                 }
-                System.out.print(Consola.Color.RESET);
             }
             lineCounter++;
         }
