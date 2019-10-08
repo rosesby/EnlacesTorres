@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Enlaces {
 
     public static void main(String[] args) throws IOException {
         Map map = new Map();
