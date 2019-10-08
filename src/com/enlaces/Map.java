@@ -3,14 +3,16 @@
  * @version 1.0
  */
 package com.enlaces;
+
 import util.Consola;
+
 import java.util.*;
 
 /**
  * Clase de estructura de datos
- *  Revisa y crea elementos
- *  Crea relaciones direccionales entre elementos
- *  Realiza busquedas entre relaciones de uno o mas elementos
+ * Revisa y crea elementos
+ * Crea relaciones direccionales entre elementos
+ * Realiza busquedas entre relaciones de uno o mas elementos
  */
 public class Map {
     private ArrayList<City> cities;
@@ -21,6 +23,7 @@ public class Map {
 
     /**
      * Crea un nuevo elemento nodo con el nombre provisto
+     *
      * @param name nombre de la ciudad
      */
     private void createCity(String name) {
@@ -29,7 +32,8 @@ public class Map {
     }
 
     /**
-     *  Crea una relación nueva de la ciudad 1 a la ciudad 2
+     * Crea una relación nueva de la ciudad 1 a la ciudad 2
+     *
      * @param strCity1 nombre de la ciudad1
      * @param strCity2 nombre de la ciudad2
      */
@@ -40,8 +44,9 @@ public class Map {
     }
 
     /**
-     *  Verifica la existencia de un elemento con el nombre provisto
-     *  Si el elemento no existe lo crea
+     * Verifica la existencia de un elemento con el nombre provisto
+     * Si el elemento no existe lo crea
+     *
      * @param strCity nombre de la ciudad
      */
     public void createCityIfDoesNotExists(String strCity) {
@@ -52,6 +57,7 @@ public class Map {
     /**
      * Verifica la existencia de un elemento con el nombre provisto
      * Se ignora la capitalización del parametro
+     *
      * @param strCityName
      * @return regresa si el elemento existe (boolean)
      */
@@ -63,6 +69,7 @@ public class Map {
     /**
      * Obtiene el objeto en memoria con el nombre provisto
      * Se ignora la capitalización del parametro
+     *
      * @param strCityName Nombre de la ciudad
      * @return regresa el objeto ciudad con el nombre provisto
      */
@@ -74,7 +81,8 @@ public class Map {
     }
 
     /**
-     *  Ejecuta una busqueda de relacion entre elementos usando el algoritmo BFS para Grafos
+     * Ejecuta una busqueda de relacion entre elementos usando el algoritmo BFS para Grafos
+     *
      * @param strCity1 nombre de la ciudad1
      * @param strCity2 nombre de la ciudad2
      * @return String con el resultado y color
@@ -103,6 +111,7 @@ public class Map {
 
     /**
      * Cierra la conexion entre la ciudad1 y ciudad1
+     *
      * @param strCity1 nombre de la ciudad1
      * @param strCity2 nombre de la ciudad2
      */
@@ -114,7 +123,7 @@ public class Map {
         city1.linkedCities.remove(city2);
     }
 
-    public String searchWayToCityDFS(String strCity1, String strCity2) {
+    public void searchWayToCityDFS(String strCity1, String strCity2) {
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
 
@@ -130,10 +139,25 @@ public class Map {
                     .findFirst();
             if (result.isPresent()) {
                 searchStack.push(result.get());
-                if (searchStack.contains(city2)) return Consola.Color.GREEN + "+"; //Check result
+                if (searchStack.contains(city2)) { //Check result
+                    printSearchTrue(searchStack, city1, city2);
+                    return ;
+                }
             } else searchStack.pop(); //remove last node from stack if doesnt have new unprocessed edges
         }
-        return Consola.Color.RED + "-";
+        printSearchFalse(city1, city2);
+    }
+
+    private void printSearchTrue(Stack<City> pathStack, City city1, City city2) {
+            List<City> cities = pathStack;
+            System.out.print(Consola.Color.GREEN + "+ " + pathStack.get(0).getName());
+            cities.remove(0);
+            cities.forEach(city -> System.out.print(" => " + city));
+            System.out.println();
+    }
+
+    private void printSearchFalse(City city1, City city2){
+        System.out.println(Consola.Color.RED + "- " + city1 + " => " + city2 + Consola.Color.RESET);
     }
 
     /**
@@ -145,6 +169,7 @@ public class Map {
 
         /**
          * Constructor
+         *
          * @param name nombre de la ciudad
          */
         public City(String name) {
@@ -154,6 +179,7 @@ public class Map {
 
         /**
          * Añade un un nuevo elemento a la lista de adayacencia de este nodo
+         *
          * @param city
          */
         public void addLink(City city) {
