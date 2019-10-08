@@ -22,8 +22,6 @@ public class Enlaces {
 
         String data;
         while ((data = in.readLine()) != null) {
-            ArrayList<Map.City> cities ;
-                    cities = map.getCities();
             Matcher m = pattern.matcher(data);
             if (m.find()) {
                 String line = m.group(0);
