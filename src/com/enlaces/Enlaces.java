@@ -34,7 +34,7 @@ public class Enlaces {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/com/data/input4");
+        FileReader fileReader = new FileReader("src/com/data/input3");
         BufferedReader in = new BufferedReader(fileReader);
 
         Pattern pattern = Pattern.compile("[\\s]*(([A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");
@@ -62,10 +62,10 @@ public class Enlaces {
                         map.createRelation(city2, city1);
                         break;
                     case "=>":
-                        System.out.println(map.searchWayToCityBFS(city1, city2) + " " + city1 + " => " + city2 + Consola.Color.RESET);
+                        System.out.println(map.searchWayToCityDFS(city1, city2) + " " + city1 + " => " + city2 + Consola.Color.RESET);
                         break;
                     case "<=":
-                        System.out.println(map.searchWayToCityBFS(city2, city1) + " " + city2 + " => " + city1 + Consola.Color.RESET);
+                        System.out.println(map.searchWayToCityDFS(city2, city1) + " " + city2 + " => " + city1 + Consola.Color.RESET);
                         break;
                     case "-":
                         map.closeConnectionBetween(city1, city2);

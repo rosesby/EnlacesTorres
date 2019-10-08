@@ -130,10 +130,10 @@ public class Map {
                     .findFirst();
             if (result.isPresent()) {
                 searchStack.push(result.get());
-                if (searchStack.contains(city2)) return Consola.Color.GREEN + "TRUE" + Consola.Color.RESET;
+                if (searchStack.contains(city2)) return Consola.Color.GREEN + "+"; //Check result
             } else searchStack.pop(); //remove last node from stack if doesnt have new unprocessed edges
         }
-        return Consola.Color.RED + "False" + Consola.Color.RESET;
+        return Consola.Color.RED + "-";
     }
 
     /**
