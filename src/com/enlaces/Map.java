@@ -1,6 +1,6 @@
-package com.Enlaces;
+package com.enlaces;
 
-import Util.Consola;
+import util.Consola;
 
 import java.util.*;
 

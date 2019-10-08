@@ -1,6 +1,6 @@
-package com.Enlaces;
+package com.enlaces;
 
-import Util.Consola;
+import util.Consola;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +14,7 @@ public class Main {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/Data/input");
+        FileReader fileReader = new FileReader("src/com/data/input");
         BufferedReader in = new BufferedReader(fileReader);
 
         Pattern pattern = Pattern.compile("((^[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.?]))(.*)");
