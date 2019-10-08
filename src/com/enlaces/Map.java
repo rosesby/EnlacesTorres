@@ -23,7 +23,7 @@ public class Map {
      * Crea un nuevo elemento nodo con el nombre provisto
      * @param name nombre de la ciudad
      */
-    public void createCity(String name) {
+    private void createCity(String name) {
         City city = new City(name);
         cities.add(city);
     }
@@ -66,7 +66,7 @@ public class Map {
      * @param strCityName Nombre de la ciudad
      * @return regresa el objeto ciudad con el nombre provisto
      */
-    public City getExistingCityByName(String strCityName) {
+    private City getExistingCityByName(String strCityName) {
         return cities.stream()
                 .filter(city -> city.getName().equalsIgnoreCase(strCityName))
                 .findFirst()
@@ -139,7 +139,7 @@ public class Map {
     /**
      * Implementa una clase nodo con lista de adayacencia
      */
-    public class City {
+    public static class City {
         private ArrayList<City> linkedCities;
         private String name;
 
