@@ -7,6 +7,10 @@ import java.util.*;
 public class Map {
     private ArrayList<City> cities;
 
+    public ArrayList<City> getCities() {
+        return cities;
+    }
+
     public Map() {
         cities = new ArrayList<City>();
     }
@@ -20,6 +24,7 @@ public class Map {
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
         city1.addLink(city2);
+        return;
     }
 
     public boolean checkIfTowerExistsByName(String strCityName) {

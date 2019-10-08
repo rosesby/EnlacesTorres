@@ -1,9 +1,19 @@
-Culiacan1 -> Hermosillo2.
-Hermosillo2 -> Monterrey5.
-Culiacan1 => Monterrey5? // esta es una pregunta
-Guadalajara3 <- Hermosillo2.
-Guadalajara3 -> Guadalajara34. // enlace
-Guadalajara34 <= Culiacan1 ? #otra pregunta
-Mexico5 <- culiacan1. // este es un enlace
-Guadalajara34 => Hermosillo2? % tercera pregunta
-Mexico5 => hermosillo2? &una torre desconocida.
+Culiacan232<-Maz232.
+maz323->Nav21
+Maz232->Arz123.
+maz232=>Arz123?
+Arz123->Lac123.
+Tij123->Maz232.
+GDL123<-Culiacan232.
+CDMX123<-GDL123.
+COL123<-CDMX123.
+TORR123<-CDMX123.
+CHI123<-Culiacan232.
+MOR123<-CHI123.
+MTY123<-MOR123.
+LAG123<-MTY123.
+Maz232=>MTY123?
+Maz232=>TORR123?
+Tij123=>COL123?
+CDMX123-COL123.
+Tij123=>COL123?

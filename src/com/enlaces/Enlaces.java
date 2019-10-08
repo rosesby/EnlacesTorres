@@ -5,6 +5,7 @@ import util.Consola;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,13 +15,15 @@ public class Enlaces {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/com/data/input");
+        FileReader fileReader = new FileReader("src/com/data/input3");
         BufferedReader in = new BufferedReader(fileReader);
 
-        Pattern pattern = Pattern.compile("((^[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.?]))(.*)");
+        Pattern pattern = Pattern.compile("[\\s]*(([A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.?]))(.*)");
 
         String data;
         while ((data = in.readLine()) != null) {
+            ArrayList<Map.City> cities = map.getCities();
+
             Matcher m = pattern.matcher(data);
             if (m.find()) {
                 String line = m.group(0);
