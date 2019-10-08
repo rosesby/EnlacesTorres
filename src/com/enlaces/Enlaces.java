@@ -37,7 +37,7 @@ public class Enlaces {
         FileReader fileReader = new FileReader("src/com/data/input3");
         BufferedReader in = new BufferedReader(fileReader);
 
-        Pattern pattern = Pattern.compile("(([\\s]*[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");
+        Pattern pattern = Pattern.compile("[\\s]*(([A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");
 
         String data;
         while ((data = in.readLine()) != null) {
