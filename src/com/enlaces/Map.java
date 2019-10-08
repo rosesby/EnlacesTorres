@@ -51,7 +51,6 @@ public class Map {
 
     //Run Depth First Search
     public String searchWayToCityDFS(String strCity1, String strCity2) {
-        System.out.println(Consola.Color.BLUE + "Depth First Search started for " + Consola.Color.RESET + strCity1 + Consola.Color.BLUE + " to " + Consola.Color.RESET + strCity2);
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
 
