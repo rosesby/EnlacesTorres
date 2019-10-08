@@ -34,7 +34,7 @@ public class Enlaces {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/com/data/input2");
+        FileReader fileReader = new FileReader("src/com/data/input4");
         BufferedReader in = new BufferedReader(fileReader);
 
         Pattern pattern = Pattern.compile("[\\s]*(([A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");

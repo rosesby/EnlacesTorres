@@ -111,7 +111,6 @@ public class Map {
 
     /**
      * Cierra la conexion entre la ciudad1 y ciudad1
-     *
      * @param strCity1 nombre de la ciudad1
      * @param strCity2 nombre de la ciudad2
      */
@@ -140,7 +139,7 @@ public class Map {
             if (result.isPresent()) {
                 searchStack.push(result.get());
                 if (searchStack.contains(city2)) { //Check result
-                    printSearchTrue(searchStack, city1, city2);
+                    printSearchTrue(searchStack);
                     return ;
                 }
             } else searchStack.pop(); //remove last node from stack if doesnt have new unprocessed edges
@@ -148,7 +147,7 @@ public class Map {
         printSearchFalse(city1, city2);
     }
 
-    private void printSearchTrue(Stack<City> pathStack, City city1, City city2) {
+    private void printSearchTrue(Stack<City> pathStack) {
             List<City> cities = pathStack;
             System.out.print(Consola.Color.GREEN + "+ " + pathStack.get(0).getName());
             cities.remove(0);
@@ -183,10 +182,7 @@ public class Map {
          * @param city
          */
         public void addLink(City city) {
-            if (city.getName() == this.name) return;
-            if (!linkedCities.contains(city)) {
                 linkedCities.add(city);
-            }
         }
 
         /**
