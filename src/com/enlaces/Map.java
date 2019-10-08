@@ -1,9 +1,17 @@
+/**
+ * @author Palazuelos Alvarado Saul Alonso
+ * @version 1.0
+ */
 package com.enlaces;
-
 import util.Consola;
-
 import java.util.*;
 
+/**
+ * Clase de estructura de datos
+ *  Revisa y crea elementos
+ *  Crea relaciones direccionales entre elementos
+ *  Realiza busquedas entre relaciones de uno o mas elementos
+ */
 public class Map {
     private ArrayList<City> cities;
 
@@ -11,37 +19,102 @@ public class Map {
         cities = new ArrayList<City>();
     }
 
+    /**
+     * Crea un nuevo elemento nodo con el nombre provisto
+     * @param name nombre de la ciudad
+     */
     public void createCity(String name) {
         City city = new City(name);
         cities.add(city);
     }
 
+    /**
+     *  Crea una relación nueva de la ciudad 1 a la ciudad 2
+     * @param strCity1 nombre de la ciudad1
+     * @param strCity2 nombre de la ciudad2
+     */
     public void createRelation(String strCity1, String strCity2) {
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
         city1.addLink(city2);
     }
 
-    public boolean checkIfTowerExistsByName(String strCityName) {
-        return cities.stream().
-                anyMatch(city -> city.getName().equals(strCityName));
-    }
-
-    public City getExistingCityByName(String strCityName) {
-        return cities.stream()
-                .filter(city -> city.getName().equals(strCityName))
-                .findFirst()
-                .get();
-    }
-
+    /**
+     *  Verifica la existencia de un elemento con el nombre provisto
+     *  Si el elemento no existe lo crea
+     * @param strCity nombre de la ciudad
+     */
     public void createCityIfDoesNotExists(String strCity) {
         boolean check = checkIfTowerExistsByName(strCity);
         if (!check) createCity(strCity);
     }
 
-    //Run Depth First Search
+    /**
+     * Verifica la existencia de un elemento con el nombre provisto
+     * Se ignora la capitalización del parametro
+     * @param strCityName
+     * @return regresa si el elemento existe (boolean)
+     */
+    private boolean checkIfTowerExistsByName(String strCityName) {
+        return cities.stream().
+                anyMatch(city -> city.getName().equalsIgnoreCase(strCityName));
+    }
+
+    /**
+     * Obtiene el objeto en memoria con el nombre provisto
+     * Se ignora la capitalización del parametro
+     * @param strCityName Nombre de la ciudad
+     * @return regresa el objeto ciudad con el nombre provisto
+     */
+    public City getExistingCityByName(String strCityName) {
+        return cities.stream()
+                .filter(city -> city.getName().equalsIgnoreCase(strCityName))
+                .findFirst()
+                .get();
+    }
+
+    /**
+     *  Ejecuta una busqueda de relacion entre elementos usando el algoritmo BFS para Grafos
+     * @param strCity1 nombre de la ciudad1
+     * @param strCity2 nombre de la ciudad2
+     * @return String con el resultado y color
+     */
+    public String searchWayToCityBFS(String strCity1, String strCity2) {
+        City city1 = getExistingCityByName(strCity1);
+        City city2 = getExistingCityByName(strCity2);
+
+        Queue<City> searchQueue = new LinkedList<City>();
+        ArrayList<City> visitedCities = new ArrayList<City>();
+
+        searchQueue.add(city1); //add first node to queue
+        while (!searchQueue.isEmpty()) { //While the queue has nodes
+            if (!searchQueue.peek().getLinkedCities().isEmpty()) { //Check if actual node has vertexes
+                searchQueue.peek().getLinkedCities().forEach(city -> { //Check for all node if has not been processed or added to the queue before
+                    if (!(visitedCities.contains(city) || searchQueue.contains(city)))
+                        searchQueue.add(city); //Check node for adding to queue
+                });
+                if (searchQueue.contains(city2)) return Consola.Color.GREEN + "+"; //Check result
+            }
+            visitedCities.add(searchQueue.peek()); //add actual node to visited nodes
+            searchQueue.poll(); //remove actual (first) node from queue
+        }
+        return Consola.Color.RED + "-";
+    }
+
+    /**
+     * Cierra la conexion entre la ciudad1 y ciudad1
+     * @param strCity1 nombre de la ciudad1
+     * @param strCity2 nombre de la ciudad2
+     */
+    public void closeConnectionBetween(String strCity1, String strCity2) {
+        City city1 = getExistingCityByName(strCity1);
+        City city2 = getExistingCityByName(strCity2);
+
+        if ((city1 == null) || (city2 == null)) return;
+        city1.linkedCities.remove(city2);
+    }
+
     public String searchWayToCityDFS(String strCity1, String strCity2) {
-        System.out.println(Consola.Color.BLUE + "Depth First Search started for " + Consola.Color.RESET + strCity1 + Consola.Color.BLUE + " to " + Consola.Color.RESET + strCity2);
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
 
@@ -63,56 +136,43 @@ public class Map {
         return Consola.Color.RED + "False" + Consola.Color.RESET;
     }
 
-    //Run Breadth First Search
-    public String searchWayToCityBFS(String strCity1, String strCity2) {
-        City city1 = getExistingCityByName(strCity1);
-        City city2 = getExistingCityByName(strCity2);
-
-        Queue<City> searchQueue = new LinkedList<City>();
-        ArrayList<City> visitedCities = new ArrayList<City>();
-
-        searchQueue.add(city1); //add first node to queue
-        while (!searchQueue.isEmpty()) { //While the queue has nodes
-            if (!searchQueue.peek().getLinkedCities().isEmpty()) { //Check if actual node has vertexes
-                searchQueue.peek().getLinkedCities().forEach(city -> { //Check for all node if has not been processed or added to the queue before
-                    if (!(visitedCities.contains(city) || searchQueue.contains(city))) searchQueue.add(city); //Check node for adding to queue
-                });
-                if (searchQueue.contains(city2)) return Consola.Color.GREEN + "+"; //Check result
-            }
-            visitedCities.add(searchQueue.peek()); //add actual node to visited nodes
-            searchQueue.poll(); //remove actual (first) node from queue
-        }
-        return Consola.Color.RED + "-";
-    }
-
-    public void closeConnectionBetween(String strCity1, String strCity2) {
-        City city1 = getExistingCityByName(strCity1);
-        City city2 = getExistingCityByName(strCity2);
-
-        if ((city1 == null) || (city2 == null)) return;
-        city1.linkedCities.remove(city2);
-    }
-
+    /**
+     * Implementa una clase nodo con lista de adayacencia
+     */
     public class City {
         private ArrayList<City> linkedCities;
         private String name;
 
+        /**
+         * Constructor
+         * @param name nombre de la ciudad
+         */
         public City(String name) {
             this.name = name;
             linkedCities = new ArrayList<City>();
         }
 
+        /**
+         * Añade un un nuevo elemento a la lista de adayacencia de este nodo
+         * @param city
+         */
         public void addLink(City city) {
-            if (city.getName() == this.name) System.out.println("City cannot be linked to itself");
-            if (!linkedCities.contains(city)){
+            if (city.getName() == this.name) return;
+            if (!linkedCities.contains(city)) {
                 linkedCities.add(city);
             }
         }
 
+        /**
+         * @return Lista de adyacencia del objeto ciudad
+         */
         public ArrayList<City> getLinkedCities() {
             return linkedCities;
         }
 
+        /**
+         * @return Nombre ciudad
+         */
         public String getName() {
             return name;
         }

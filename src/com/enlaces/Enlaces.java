@@ -1,23 +1,43 @@
+/**
+ * @author Palazuelos Alvarado Saul Alonso
+ * @version 1.0
+ */
 package com.enlaces;
 
 import util.Consola;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author Palazuelos Alvarado Saul Alonso
+ * @version 1.0
+ */
+
+/**
+ * Clase principal
+ *  Al iniciar el programa, lee el archivo de entrada
+ *  valida cada linea de manera independiente con regex
+ *  separa los elementos de informacion de cada linea
+ *  crea objetos, relaciones y busquedas en base a la los elementos de la informacion
+ */
 public class Enlaces {
 
+    /**Funcion de entrada principal
+     *
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/com/data/input");
+        FileReader fileReader = new FileReader("src/com/data/input3");
         BufferedReader in = new BufferedReader(fileReader);
 
-        Pattern pattern = Pattern.compile("((^[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.?]))(.*)");
+        Pattern pattern = Pattern.compile("(([\\s]*[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");
 
         String data;
         while ((data = in.readLine()) != null) {
