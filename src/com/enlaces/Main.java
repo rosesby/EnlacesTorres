@@ -32,7 +32,6 @@ public class Main {
                 String dotMark = m.group(5);
 
                 boolean doktMarkCheck = ((operator.equals("<=") || operator.equals("=>")) && dotMark.equals(".")) || ((operator.equals("<-") || operator.equals("->")) && dotMark.equals("?"));
-                System.out.println(operator + " && " + dotMark + " : " + doktMarkCheck);
                 if(doktMarkCheck) continue;
 
                 System.out.println();
