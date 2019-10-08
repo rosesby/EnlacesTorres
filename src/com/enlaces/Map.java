@@ -29,12 +29,12 @@ public class Map {
 
     public boolean checkIfTowerExistsByName(String strCityName) {
         return cities.stream().
-                anyMatch(city -> city.getName().equals(strCityName));
+                anyMatch(city -> city.getName().equalsIgnoreCase(strCityName));
     }
 
     public City getExistingCityByName(String strCityName) {
         return cities.stream()
-                .filter(city -> city.getName().equals(strCityName))
+                .filter(city -> city.getName().equalsIgnoreCase(strCityName))
                 .findFirst()
                 .get();
     }
