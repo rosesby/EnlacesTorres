@@ -23,12 +23,9 @@ public class Main {
         while ((data = in.readLine()) != null) {
             Matcher m = pattern.matcher(data);
             if (m.find()) {
-                String line = m.group(0);
-                String expresion = m.group(1);
                 String city1 = m.group(2);
                 String operator = m.group(3);
                 String city2 = m.group(4);
-                String garbage = m.group(6);
                 String dotMark = m.group(5);
 
                 boolean doktMarkCheck = ((operator.equals("<=") || operator.equals("=>")) && dotMark.equals(".")) || ((operator.equals("<-") || operator.equals("->")) && dotMark.equals("?"));
@@ -45,7 +42,7 @@ public class Main {
                         map.createRelation(city2, city1);
                         break;
                     case "=>":
-                        System.out.println(map.searchWayToCityBFS(city2, city1) + " " + city1 + " => " + city2 + Consola.Color.RESET);
+                        System.out.println(map.searchWayToCityBFS(city1, city2) + " " + city1 + " => " + city2 + Consola.Color.RESET);
                         break;
                     case "<=":
                         System.out.println(map.searchWayToCityBFS(city2, city1) + " " + city2 + " => " + city1 + Consola.Color.RESET);
