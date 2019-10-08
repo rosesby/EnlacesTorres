@@ -69,11 +69,9 @@ public class Main {
                         break;
                     case "=>":
                         System.out.println("Puede ir de " + city1 + " a " + city2 + " : " + map.searchWayToCityBFS(city1, city2));
-                        System.out.println("Puede ir de " + city1 + " a " + city2 + " : " + map.searchWayToCityDFS(city1, city2));
                         break;
                     case "<=":
                         System.out.println("Puede ir de " + city2 + " a " + city1 + " : " + map.searchWayToCityBFS(city2, city1));
-                        System.out.println("Puede ir de " + city2 + " a " + city1 + " : " + map.searchWayToCityDFS(city2, city1));
                         break;
                     case "-":
                         map.closeAllConnectionsBetween(city1, city2);
@@ -82,13 +80,5 @@ public class Main {
             }
             lineCounter++;
         }
-    }
-
-    public interface GraphSearch {
-        int nodeSearch(Map.City a, Map.City b);
-    }
-
-    private int operate(Map.City a, Map.City b, GraphSearch search) {
-        return search.nodeSearch(a, b);
     }
 }

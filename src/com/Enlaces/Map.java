@@ -70,8 +70,6 @@ public class Map {
         searchStack.add(city1); //add first node to queue
 
         while (searchStack.size() > 0) {
-            printQueueDFS(searchStack.peek(), visitedCities, searchStack); //print actual queue
-            showConnectionsDFS(searchStack.peek(), visitedCities, searchStack);
             visitedCities.add(searchStack.peek()); //add actual node to visited nodes
             Optional<City> result = searchStack.peek().getLinkedCities().stream()  //Check for new nodes in the edges of the actual node
                     .filter(city -> !(visitedCities.contains(city)))
@@ -82,31 +80,6 @@ public class Map {
             } else searchStack.pop(); //remove last node from stack if doesnt have new unprocessed edges
         }
         return Consola.Color.RED + "False" + Consola.Color.RESET;
-    }
-
-    public void printQueueDFS(City actualCity, ArrayList<City> visitedCities, Stack<City> actualCities) {
-        String consoleOut = "Queue : |";
-        for (City city : actualCities) {
-            if (city == actualCity) consoleOut += Consola.Color.GREEN;
-            else if (visitedCities.contains(city)) consoleOut += Consola.Color.RED;
-            else consoleOut += Consola.Color.BLUE;
-            consoleOut += city + Consola.Color.RESET + "|";
-        }
-        System.out.println(consoleOut);
-    }
-
-    public void showConnectionsDFS(City actualCity, ArrayList<City> visitedCities, Stack<City> actualCities) {
-        String consoleOut = "Read : " + actualCity.getName() + " -> |";
-        if (actualCity.getLinkedCities().size() == 0) {
-            consoleOut += "|";
-        } else {
-            for (City city : actualCity.getLinkedCities()) {
-                consoleOut += (visitedCities.contains(city) || actualCities.contains(city)) ? Consola.Color.RED : Consola.Color.BLUE;
-                consoleOut += city.getName() + Consola.Color.RESET;
-                consoleOut += "|";
-            }
-        }
-        System.out.println(consoleOut);
     }
 
     //Run Breadth First Search
