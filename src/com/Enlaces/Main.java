@@ -69,7 +69,7 @@ public class Main {
                         System.out.println("Puede ir de " + city2 + " a " + city1 + " : " + map.searchWayToCityBFS(city2, city1));
                         break;
                     case "-":
-                        map.closeAllConnectionsBetween(city1, city2);
+                        map.closeConnectionBetween(city1, city2);
                         break;
                 }
             }

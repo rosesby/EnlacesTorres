@@ -118,15 +118,12 @@ public class Map {
         System.out.println(consoleOut);
     }
 
-    public void closeAllConnectionsBetween(String strCity1, String strCity2) {
+    public void closeConnectionBetween(String strCity1, String strCity2) {
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
 
-        //TODO apply exception istead of if
-        if (city1.linkedCities.contains(city2)) city1.linkedCities.remove(city2);
-        if (city2.linkedCities.contains(city1)) city2.linkedCities.remove(city1);
-
-        System.out.println("All connections deleted between " + city1 + " & " + city2);
+        if ((city1 == null) || (city2 == null)) return;
+        city1.linkedCities.remove(city2);
     }
 
     public class City {
