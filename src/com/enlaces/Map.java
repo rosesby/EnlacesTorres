@@ -1,6 +1,6 @@
-package com.Enlaces;
+package com.enlaces;
 
-import Util.Consola;
+import util.Consola;
 
 import java.util.*;
 
@@ -36,12 +36,7 @@ public class Map {
 
     public void createCityIfDoesNotExists(String strCity) {
         boolean check = checkIfTowerExistsByName(strCity);
-        if (check) {
-            System.out.println("Already Exists");
-        } else {
-            createCity(strCity);
-            System.out.println("City was created");
-        }
+        if (!check) createCity(strCity);
     }
 
     //Run Depth First Search
@@ -70,7 +65,6 @@ public class Map {
 
     //Run Breadth First Search
     public String searchWayToCityBFS(String strCity1, String strCity2) {
-        System.out.println(Consola.Color.BLUE + "Breadth First Search started for " + Consola.Color.RESET + strCity1 + Consola.Color.BLUE + " to " + Consola.Color.RESET + strCity2);
         City city1 = getExistingCityByName(strCity1);
         City city2 = getExistingCityByName(strCity2);
 
@@ -79,43 +73,16 @@ public class Map {
 
         searchQueue.add(city1); //add first node to queue
         while (!searchQueue.isEmpty()) { //While the queue has nodes
-            printQueueBFS(searchQueue.peek(), visitedCities, searchQueue); //print actual queue
-            showConnectionsBFS(searchQueue.peek(), visitedCities, searchQueue);
             if (!searchQueue.peek().getLinkedCities().isEmpty()) { //Check if actual node has vertexes
                 searchQueue.peek().getLinkedCities().forEach(city -> { //Check for all node if has not been processed or added to the queue before
                     if (!(visitedCities.contains(city) || searchQueue.contains(city))) searchQueue.add(city); //Check node for adding to queue
                 });
-                if (searchQueue.contains(city2)) return Consola.Color.GREEN + "TRUE" + Consola.Color.RESET; //Check result
+                if (searchQueue.contains(city2)) return Consola.Color.GREEN + "+"; //Check result
             }
             visitedCities.add(searchQueue.peek()); //add actual node to visited nodes
             searchQueue.poll(); //remove actual (first) node from queue
         }
-        return Consola.Color.RED + "False" + Consola.Color.RESET;
-    }
-
-    public void printQueueBFS(City actualCity, ArrayList<City> visitedCities, Queue<City> actualCities) {
-        StringBuilder consoleOut = new StringBuilder("Queue : |");
-        for (City city : actualCities) {
-            if (city == actualCity) consoleOut.append(Consola.Color.GREEN);
-            else if (visitedCities.contains(city)) consoleOut.append(Consola.Color.RED);
-            else consoleOut.append(Consola.Color.BLUE);
-            consoleOut.append(city).append(Consola.Color.RESET).append("|");
-        }
-        System.out.println(consoleOut);
-    }
-
-    public void showConnectionsBFS(City actualCity, ArrayList<City> visitedCities, Queue<City> actualCities) {
-        StringBuilder consoleOut = new StringBuilder("Read : " + actualCity.getName() + " -> |");
-        if (actualCity.getLinkedCities().size() == 0) {
-            consoleOut.append("|");
-        } else {
-            for (City city : actualCity.getLinkedCities()) {
-                consoleOut.append((visitedCities.contains(city) || actualCities.contains(city)) ? Consola.Color.RED : Consola.Color.BLUE);
-                consoleOut.append(city.getName()).append(Consola.Color.RESET);
-                consoleOut.append("|");
-            }
-        }
-        System.out.println(consoleOut);
+        return Consola.Color.RED + "-";
     }
 
     public void closeConnectionBetween(String strCity1, String strCity2) {
@@ -137,16 +104,9 @@ public class Map {
 
         public void addLink(City city) {
             if (city.getName() == this.name) System.out.println("City cannot be linked to itself");
-            if (linkedCities.contains(city))
-                System.out.println("Link from " + this.name + " to " + city.getName() + " already exists");
-            else {
+            if (!linkedCities.contains(city)){
                 linkedCities.add(city);
-                System.out.println(this.name + " was linked to " + city.getName());
             }
-        }
-
-        public void closeLink(City city) {
-            linkedCities.remove(city);
         }
 
         public ArrayList<City> getLinkedCities() {

@@ -1,6 +1,6 @@
-package com.Enlaces;
+package com.enlaces;
 
-import Util.Consola;
+import util.Consola;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,7 +14,7 @@ public class Main {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/Data/input");
+        FileReader fileReader = new FileReader("src/com/data/input");
         BufferedReader in = new BufferedReader(fileReader);
 
         Pattern pattern = Pattern.compile("((^[A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.?]))(.*)");
@@ -32,28 +32,10 @@ public class Main {
                 String dotMark = m.group(5);
 
                 boolean doktMarkCheck = ((operator.equals("<=") || operator.equals("=>")) && dotMark.equals(".")) || ((operator.equals("<-") || operator.equals("->")) && dotMark.equals("?"));
-                System.out.println(operator + " && " + dotMark + " : " + doktMarkCheck);
                 if(doktMarkCheck) continue;
 
-                System.out.println();
-                System.out.println(Consola.Color.RED + "Match in line " + lineCounter + " : " + Consola.Color.RESET + line + Consola.Color.RESET);
-                System.out.println(Consola.Color.BLUE + "Expression: " + Consola.Color.RESET + expresion);
-                if (!garbage.isBlank())
-                    System.out.println(Consola.Color.CYAN + "Garbage: " + Consola.Color.RESET + garbage);
-
-                System.out.print(Consola.Color.PURPLE + "City1 : " + Consola.Color.RESET + city1 + " : ");
-                System.out.print(Consola.Color.GREEN);
                 map.createCityIfDoesNotExists(city1);
-                System.out.print(Consola.Color.RESET);
-
-                System.out.println(Consola.Color.PURPLE + "Operator: " + Consola.Color.RESET + operator);
-
-                System.out.print(Consola.Color.PURPLE + "City2 : " + Consola.Color.RESET + city2 + " : ");
-                System.out.print(Consola.Color.GREEN);
                 map.createCityIfDoesNotExists(city2);
-                System.out.print(Consola.Color.RESET);
-
-                System.out.print(Consola.Color.PURPLE + "Result : " + Consola.Color.RESET);
 
                 switch (operator) {
                     case "->":
@@ -63,10 +45,10 @@ public class Main {
                         map.createRelation(city2, city1);
                         break;
                     case "=>":
-                        System.out.println("Puede ir de " + city1 + " a " + city2 + " : " + map.searchWayToCityBFS(city1, city2));
+                        System.out.println(map.searchWayToCityBFS(city2, city1) + " " + city1 + " => " + city2 + Consola.Color.RESET);
                         break;
                     case "<=":
-                        System.out.println("Puede ir de " + city2 + " a " + city1 + " : " + map.searchWayToCityBFS(city2, city1));
+                        System.out.println(map.searchWayToCityBFS(city2, city1) + " " + city2 + " => " + city1 + Consola.Color.RESET);
                         break;
                     case "-":
                         map.closeConnectionBetween(city1, city2);
