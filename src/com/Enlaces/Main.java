@@ -9,14 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
-    private static Map map;
-    private static int lineCounter;
 
     public static void main(String[] args) throws IOException {
-        map = new Map();
-        lineCounter = 1;
-
-        Runnable method;
+        Map map = new Map();
+        int lineCounter = 1;
 
         FileReader fileReader = new FileReader("src/Data/input");
         BufferedReader in = new BufferedReader(fileReader);

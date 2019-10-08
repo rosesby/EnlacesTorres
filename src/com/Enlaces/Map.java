@@ -8,16 +8,15 @@ import java.util.*;
 //Todo usar delegados para no tener que converit string a ciudad en cada funcion, solo en una y luego pasar al delegado;
 
 public class Map {
-    public ArrayList<City> cities;
+    private ArrayList<City> cities;
 
     public Map() {
         cities = new ArrayList<City>();
     }
 
-    public City createCity(String name) {
+    public void createCity(String name) {
         City city = new City(name);
         cities.add(city);
-        return city;
     }
 
     public void createRelation(String strCity1, String strCity2) {
@@ -46,16 +45,6 @@ public class Map {
             createCity(strCity);
             System.out.println("City was created");
         }
-    }
-
-    public boolean checkIfCanTravelFromTo(String strCity1, String strCity2) {
-        City city1 = getExistingCityByName(strCity1);
-        City city2 = getExistingCityByName(strCity2);
-
-        for (City city : city1.linkedCities) {
-            searchWayToCity(city1, city2);
-        }
-        return false;
     }
 
     //Run Depth First Search
@@ -108,33 +97,28 @@ public class Map {
     }
 
     public void printQueueBFS(City actualCity, ArrayList<City> visitedCities, Queue<City> actualCities) {
-        String consoleOut = "Queue : |";
+        StringBuilder consoleOut = new StringBuilder("Queue : |");
         for (City city : actualCities) {
-            if (city == actualCity) consoleOut += Consola.Color.GREEN;
-            else if (visitedCities.contains(city)) consoleOut += Consola.Color.RED;
-            else consoleOut += Consola.Color.BLUE;
-            consoleOut += city + Consola.Color.RESET + "|";
+            if (city == actualCity) consoleOut.append(Consola.Color.GREEN);
+            else if (visitedCities.contains(city)) consoleOut.append(Consola.Color.RED);
+            else consoleOut.append(Consola.Color.BLUE);
+            consoleOut.append(city).append(Consola.Color.RESET).append("|");
         }
         System.out.println(consoleOut);
     }
 
     public void showConnectionsBFS(City actualCity, ArrayList<City> visitedCities, Queue<City> actualCities) {
-        String consoleOut = "Read : " + actualCity.getName() + " -> |";
+        StringBuilder consoleOut = new StringBuilder("Read : " + actualCity.getName() + " -> |");
         if (actualCity.getLinkedCities().size() == 0) {
-            consoleOut += "|";
+            consoleOut.append("|");
         } else {
             for (City city : actualCity.getLinkedCities()) {
-                consoleOut += (visitedCities.contains(city) || actualCities.contains(city)) ? Consola.Color.RED : Consola.Color.BLUE;
-                consoleOut += city.getName() + Consola.Color.RESET;
-                consoleOut += "|";
+                consoleOut.append((visitedCities.contains(city) || actualCities.contains(city)) ? Consola.Color.RED : Consola.Color.BLUE);
+                consoleOut.append(city.getName()).append(Consola.Color.RESET);
+                consoleOut.append("|");
             }
         }
         System.out.println(consoleOut);
-    }
-
-    public boolean searchWayToCity(City city1, City city2) {
-        boolean res = city1.linkedCities.stream().anyMatch(city -> city.linkedCities.contains(city2));
-        return res;
     }
 
     public void closeAllConnectionsBetween(String strCity1, String strCity2) {
