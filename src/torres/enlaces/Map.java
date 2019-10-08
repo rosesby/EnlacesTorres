@@ -2,7 +2,7 @@
  * @author Palazuelos Alvarado Saul Alonso
  * @version 1.0
  */
-package com.enlaces;
+package torres.enlaces;
 
 import util.Consola;
 

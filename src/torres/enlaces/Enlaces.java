@@ -2,9 +2,8 @@
  * @author Palazuelos Alvarado Saul Alonso
  * @version 1.0
  */
-package com.enlaces;
+package torres.enlaces;
 
-import util.Consola;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -34,7 +33,7 @@ public class Enlaces {
         Map map = new Map();
         int lineCounter = 1;
 
-        FileReader fileReader = new FileReader("src/com/data/input4");
+        FileReader fileReader = new FileReader("src/torres/data/input4");
         BufferedReader in = new BufferedReader(fileReader);
 
         Pattern pattern = Pattern.compile("[\\s]*(([A-z][A-z0-9]{0,14})[\\s]*(<-|->|<=|=>|-)[\\s]*([A-z][A-z0-9]{0,14})[\\s]*([.]|[?]))(.*)");
