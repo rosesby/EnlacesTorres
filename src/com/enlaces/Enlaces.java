@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Enlaces {
 
     public static void main(String[] args) throws IOException {
         Map map = new Map();
@@ -28,8 +28,8 @@ public class Main {
                 String city2 = m.group(4);
                 String dotMark = m.group(5);
 
-                boolean doktMarkCheck = ((operator.equals("<=") || operator.equals("=>")) && dotMark.equals(".")) || ((operator.equals("<-") || operator.equals("->")) && dotMark.equals("?"));
-                if(doktMarkCheck) continue;
+                boolean dotMarkCheck = ((operator.equals("<=") || operator.equals("=>")) && dotMark.equals(".")) || ((operator.equals("<-") || operator.equals("->")) && dotMark.equals("?"));
+                if(dotMarkCheck) continue;
 
                 map.createCityIfDoesNotExists(city1);
                 map.createCityIfDoesNotExists(city2);
