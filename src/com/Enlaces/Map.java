@@ -4,9 +4,6 @@ import Util.Consola;
 
 import java.util.*;
 
-//todo seleccionar metodo de busqueda, e imprimir proceso de busqueda el stack y los visitados
-//Todo usar delegados para no tener que converit string a ciudad en cada funcion, solo en una y luego pasar al delegado;
-
 public class Map {
     private ArrayList<City> cities;
 

@@ -55,7 +55,6 @@ public class Main {
 
                 System.out.print(Consola.Color.PURPLE + "Result : " + Consola.Color.RESET);
 
-                //todo use delegate to call search function
                 switch (operator) {
                     case "->":
                         map.createRelation(city1, city2);
