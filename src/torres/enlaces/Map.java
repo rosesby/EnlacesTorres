@@ -3,9 +3,7 @@
  * @version 1.0
  */
 package torres.enlaces;
-
 import util.Consola;
-
 import java.util.*;
 
 /**
